@@ -15,6 +15,20 @@ export const getUser = async (req, res) => {
 
 export const Register = async (req, res) => {
   const { name, email, password, confPassword } = req.body;
+
+  if (!name.trim() || !email.trim() || !password.trim() || !confPassword.trim()) {
+    return res.status(400).json({ msg: "Input fields cannot be empty" });
+  }
+
+  if (password !== confPassword) {
+    return res.status(400).json({ msg: "Passwords do not match" });
+  }
+
+  const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/;
+  if (!passwordRegex.test(password)) {
+    return res.status(400).json({ msg: "Password must be at least 8 characters long, include at least one uppercase letter and one number" });
+  }
+
   if (password !== confPassword)
     return res.status(400).json({ msg: "Password not match" });
 
@@ -35,7 +49,7 @@ export const Register = async (req, res) => {
       email: email,
       password: hashPassword,
     });
-    res.json({ msg: "Register Berhasil" });
+    res.json({ msg: "Register Success" });
   } catch (error) {
     console.log(error);
   }
