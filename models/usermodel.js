@@ -46,6 +46,12 @@ export const Orders = db.define('orders', {
     underwear: {
         type: DataTypes.INTEGER
     },
+    pickup_time: {
+        type: DataTypes.STRING(30)
+    },
+    service_type: {
+        type: DataTypes.STRING(30)
+    },
 }, {
     freezeTableName: true
 });
